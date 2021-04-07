@@ -19,7 +19,9 @@ get_block_height()
 {
 	local RESPONSE=$(curl --insecure --connect-timeout 6 -sf --data '{"method":"eth_blockNumber","params":[],"id":1,"jsonrpc":"2.0"}' -H "Content-Type: application/json" -X POST $IPN)
 	local BH=$(echo "$RESPONSE" | jq -r '.|select(.result)|.result')
-	BH=$(($BH))
+	if [ "$BH" != "" ]; then
+		BH=$(($BH))
+	fi
         echo $BH
 }
 
